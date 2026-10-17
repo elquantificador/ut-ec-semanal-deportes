@@ -6,51 +6,80 @@ repositorios.
 
 ## Identificación
 
-- **Título:** Artículo de "El Quantificador" sobre el uso del tiempo
+- **Título:** Uso del tiempo: ¿cuántas horas semanales dedican los ecuatorianos a la actividad física?
 - **Descripción del repositorio:** Artículo para 'El Quantificador' sobre la temática del uso del tiempo
-- **Autoría:** [COMPLETAR: nombres, igual que en el sitio]
-- **Fecha de publicación:** [COMPLETAR: AAAA-MM-DD]
-- **Artículo publicado:** [COMPLETAR: enlace a elquantificador.org]
-- **Categoría:** [COMPLETAR: Economía, Política, Salud, Educación o Valores y
-  comportamiento]
-- **Edición:** [COMPLETAR: por ejemplo, Julio-Diciembre 2026]
+- **Autoría:** Christian Salas Márquez
+- **Fecha de publicación:** 2023-06-02
+- **Artículo publicado:** https://elquantificador.org/post/valores/2023-06-02-uso-del-tiempo-deportes/
+- **Categoría:** Valores y comportamiento
+- **Edición:** Febrero - Agosto 2023
 
 ## Estado
 
-[COMPLETAR: en preparación, en revisión editorial o publicado. Anota qué falta
-para cerrar el artículo.]
+Publicado el 2023-06-02 (el `.Rmd` del repositorio está fechado el 2023-05-15).
 
 ## Pregunta y alcance
 
-[COMPLETAR: dos o tres oraciones con la pregunta, el periodo, la cobertura
-geográfica y la unidad de análisis.]
+El artículo estudia cuántas horas semanales dedican los ecuatorianos al
+ejercicio o al deporte y las compara con el tiempo que recomienda la OMS. Usa
+la Encuesta Específica de Uso del Tiempo 2012 y la Encuesta Nacional
+Multipropósito de Hogares de diciembre de 2019 y de diciembre de 2020, con
+cobertura nacional. La unidad de análisis es la persona, y los resultados se
+desagregan por sexo, grupo de edad y, para Azuay, Guayas y Pichincha, por provincia.
 
 ## Requisitos
 
-- R [COMPLETAR: versión, por ejemplo 4.5.x].
-- Paquetes de R: [COMPLETAR: lista en orden alfabético].
+- R: no documentada en el repositorio.
+- Paquetes de R: foreign, grid, gridExtra, haven, patchwork, radiant.data,
+  readr, rstudioapi, srvyr, survey, tidyverse. Los scripts los instalan con
+  `if(!require(...)) install.packages(...)`; `rstudioapi` se usa con `::` sin
+  instalación explícita.
 
 ## Fuentes de datos
 
 | Fuente | Institución | Periodo | Acceso | Script |
 |---|---|---|---|---|
-| [COMPLETAR] | [COMPLETAR] | [COMPLETAR] | [COMPLETAR: descarga automática o manual] | `code/cleaning/00_download_fuente.R` |
+| Encuesta Específica de Uso del Tiempo (EUT) | INEC | 2012 | Descarga automática del zip `Base EUT 2012.zip` desde el GitHub del autor; también está en `data/` | `code/deportes_download.R` |
+| Encuesta Nacional Multipropósito de Hogares, personas | INEC | Diciembre 2019 | Descarga automática del CSV desde el GitHub del autor; también está en `data/` | `code/deportes_data_manipulation.R` |
+| Encuesta Nacional Multipropósito de Hogares, personas y educación, actividad física y TIC | INEC | Diciembre 2020 | Descarga automática de los CSV desde el GitHub del autor; también están en `data/` | `code/deportes_data_manipulation.R` |
 
-Si alguna fuente no permite descarga automática, explica aquí cómo obtenerla y
-dónde colocarla en `data/raw/`.
+Enlaces oficiales citados en el artículo: EUT 2012,
+https://www.ecuadorencifras.gob.ec/uso-del-tiempo-2/; Multipropósito 2019,
+https://www.ecuadorencifras.gob.ec/encuesta-nacional-multiproposito-de-hogares-2019/;
+Multipropósito 2020,
+https://www.ecuadorencifras.gob.ec/encuesta-nacional-multiproposito-de-hogares/.
+Los scripts leen las copias del repositorio `christianjaviersalasmarquez/ut-ec-semanal-deportes`
+(rama `main`) mediante URL absolutas, no los archivos locales de `data/`.
 
 ## Salidas
 
-- `outputs/tables/[COMPLETAR].csv`: [COMPLETAR: qué contiene].
-- `outputs/graphs/[COMPLETAR].png`: [COMPLETAR: qué muestra].
-- `article/images/graficoN.png`: copias numeradas según el orden del texto.
+- `images/grafico1-articulo-deporte.png`: horas semanales promedio de ejercicio o deporte por sexo, para 2012, 2019 y 2020.
+- `images/grafico2-articulo-deporte.png`: horas semanales promedio por sexo y grupo de edad en los tres años.
+- `images/grafico3-articulo-deporte.png`: horas semanales promedio por sexo en Azuay, Guayas y Pichincha, en los tres años.
+- `report/texto-articulo-deporte.Rmd`, con sus versiones `.docx` y `.html`: texto del artículo.
 
 ## Cómo replicar en este repositorio
 
-Este repositorio conserva sus instrucciones originales en la sección
-"README anterior". Si todavía no tiene `MASTER.R`, sigue esas instrucciones.
-Cuando se migre a la estructura estándar, reemplaza esta sección por los pasos
-de `MASTER.R`.
+El README anterior solo ofrece dos formas generales (clonar con Git o
+descargar el zip del repositorio) y pide tener el software instalado; los
+pasos siguientes se deducen de los scripts. No hay `MASTER.R` ni `renv`.
+
+1. Clona o descarga el repositorio y abre `ut-ec-semanal-deportes.Rproj`. El
+   script de análisis fija el directorio con
+   `rstudioapi::getActiveDocumentContext()`, así que hay que ejecutarlo
+   desde RStudio.
+2. Ejecuta `code/deportes_analysis.R`. Este script llama a
+   `code/deportes_download.R`, que descarga y descomprime la base EUT 2012
+   en un directorio temporal.
+3. `code/deportes_analysis.R` no llama a `code/deportes_data_manipulation.R`,
+   pero usa los objetos que ese script crea (por ejemplo `UT111_UT2012`).
+   Ejecuta `code/deportes_data_manipulation.R` después de la descarga y
+   antes del diseño muestral. Ese script lee las bases 2019 y 2020 desde
+   GitHub con `read_csv2()`.
+4. El análisis guarda los tres gráficos en `images/`. Para el texto,
+   compila `report/texto-articulo-deporte.Rmd`.
+
+Se requiere conexión a internet, porque ninguna base se lee de `data/`.
 
 ## README anterior
 

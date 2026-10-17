@@ -1,0 +1,5 @@
+source_name,institution,period,official_url,downloaded_file,script
+Encuesta Específica de Uso del Tiempo (EUT),INEC,2012,https://www.ecuadorencifras.gob.ec/uso-del-tiempo-2/,data/Base EUT 2012.zip,code/deportes_download.R
+Encuesta Nacional Multipropósito de Hogares (personas),INEC,2019-12,https://www.ecuadorencifras.gob.ec/encuesta-nacional-multiproposito-de-hogares-2019/,data/201912_multibdd_personas.sav.csv,code/deportes_data_manipulation.R
+Encuesta Nacional Multipropósito de Hogares (personas),INEC,2020-12,https://www.ecuadorencifras.gob.ec/encuesta-nacional-multiproposito-de-hogares/,data/202012_multibdd_personas.csv,code/deportes_data_manipulation.R
+Encuesta Nacional Multipropósito de Hogares (educación actividad física y TIC),INEC,2020-12,https://www.ecuadorencifras.gob.ec/encuesta-nacional-multiproposito-de-hogares/,data/202012_multibdd_educación_actfisica_tics.csv,code/deportes_data_manipulation.R
