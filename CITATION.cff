@@ -1,10 +1,9 @@
 cff-version: 1.2.0
 message: "Si usas este material, cítalo con estos datos."
-title: "Artículo para 'El Quantificador' sobre la temática del uso del tiempo"
+title: "Uso del tiempo: ¿cuántas horas semanales dedican los ecuatorianos a la actividad física?"
 type: dataset
 authors:
-  - name: "El Quantificador (LIDE)"
-    website: "https://elquantificador.org/"
+  - family-names: "Salas Márquez"
+    given-names: "Christian"
 repository-code: "https://github.com/elquantificador/ut-ec-semanal-deportes"
 license: MIT
-# Agrega aquí a las personas autoras del artículo cuando corresponda.
