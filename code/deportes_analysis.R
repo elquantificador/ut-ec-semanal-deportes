@@ -2,9 +2,8 @@
 ## ----------------------------- Directorio ---------------------------------- ##
 ## --------------------------------------------------------------------------- ##
 
-current.path <- dirname(rstudioapi::getActiveDocumentContext()$path)
-setwd(current.path)
-setwd("..")
+# Las rutas son relativas a la raíz del repositorio: ejecuta el script con ese
+# directorio de trabajo (al abrir el .Rproj ya lo es).
 
 ## --------------------------------------------------------------------------- ##
 ## ------------------------------ Librerías ---------------------------------- ##
@@ -24,7 +23,11 @@ if(!require(srvyr)) install.packages("srvyr", repos = "http://cran.us.r-project.
 ## ------------------------------- Source ------------------------------------ ##
 ## --------------------------------------------------------------------------- ##
 
+# El orden importa: la manipulación necesita la ruta de la EUT 2012 que crea la
+# descarga, y el diseño muestral usa los objetos de la manipulación.
+
 source('code/deportes_download.R')
+source('code/deportes_data_manipulation.R')
 
 
 ## --------------------------------------------------------------------------- ##

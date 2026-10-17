@@ -31,25 +31,25 @@ desagregan por sexo, grupo de edad y, para Azuay, Guayas y Pichincha, por provin
 
 - R: no documentada en el repositorio.
 - Paquetes de R: foreign, grid, gridExtra, haven, patchwork, radiant.data,
-  readr, rstudioapi, srvyr, survey, tidyverse. Los scripts los instalan con
-  `if(!require(...)) install.packages(...)`; `rstudioapi` se usa con `::` sin
-  instalación explícita.
+  readr, srvyr, survey, tidyverse. Los scripts los instalan con
+  `if(!require(...)) install.packages(...)`.
 
 ## Fuentes de datos
 
 | Fuente | Institución | Periodo | Acceso | Script |
 |---|---|---|---|---|
-| Encuesta Específica de Uso del Tiempo (EUT) | INEC | 2012 | Descarga automática del zip `Base EUT 2012.zip` desde el GitHub del autor; también está en `data/` | `code/deportes_download.R` |
-| Encuesta Nacional Multipropósito de Hogares, personas | INEC | Diciembre 2019 | Descarga automática del CSV desde el GitHub del autor; también está en `data/` | `code/deportes_data_manipulation.R` |
-| Encuesta Nacional Multipropósito de Hogares, personas y educación, actividad física y TIC | INEC | Diciembre 2020 | Descarga automática de los CSV desde el GitHub del autor; también están en `data/` | `code/deportes_data_manipulation.R` |
+| Encuesta Específica de Uso del Tiempo (EUT) | INEC | 2012 | Lee `data/Base EUT 2012.zip`; si falta, lo descarga del GitHub del autor | `code/deportes_download.R` |
+| Encuesta Nacional Multipropósito de Hogares, personas | INEC | Diciembre 2019 | Lee el CSV de `data/`; si falta, lo descarga del GitHub del autor | `code/deportes_data_manipulation.R` |
+| Encuesta Nacional Multipropósito de Hogares, personas y educación, actividad física y TIC | INEC | Diciembre 2020 | Lee los CSV de `data/`; si faltan, los descarga del GitHub del autor | `code/deportes_data_manipulation.R` |
 
 Enlaces oficiales citados en el artículo: EUT 2012,
 https://www.ecuadorencifras.gob.ec/uso-del-tiempo-2/; Multipropósito 2019,
 https://www.ecuadorencifras.gob.ec/encuesta-nacional-multiproposito-de-hogares-2019/;
 Multipropósito 2020,
 https://www.ecuadorencifras.gob.ec/encuesta-nacional-multiproposito-de-hogares/.
-Los scripts leen las copias del repositorio `christianjaviersalasmarquez/ut-ec-semanal-deportes`
-(rama `main`) mediante URL absolutas, no los archivos locales de `data/`.
+Los scripts leen primero las copias locales de `data/`; la URL del repositorio
+`christianjaviersalasmarquez/ut-ec-semanal-deportes` (rama `main`) es solo respaldo.
+Las copias locales tienen el mismo contenido que esa descarga.
 
 ## Salidas
 
@@ -64,22 +64,19 @@ El README anterior solo ofrece dos formas generales (clonar con Git o
 descargar el zip del repositorio) y pide tener el software instalado; los
 pasos siguientes se deducen de los scripts. No hay `MASTER.R` ni `renv`.
 
-1. Clona o descarga el repositorio y abre `ut-ec-semanal-deportes.Rproj`. El
-   script de análisis fija el directorio con
-   `rstudioapi::getActiveDocumentContext()`, así que hay que ejecutarlo
-   desde RStudio.
-2. Ejecuta `code/deportes_analysis.R`. Este script llama a
-   `code/deportes_download.R`, que descarga y descomprime la base EUT 2012
-   en un directorio temporal.
-3. `code/deportes_analysis.R` no llama a `code/deportes_data_manipulation.R`,
-   pero usa los objetos que ese script crea (por ejemplo `UT111_UT2012`).
-   Ejecuta `code/deportes_data_manipulation.R` después de la descarga y
-   antes del diseño muestral. Ese script lee las bases 2019 y 2020 desde
-   GitHub con `read_csv2()`.
-4. El análisis guarda los tres gráficos en `images/`. Para el texto,
+1. Clona o descarga el repositorio y abre `ut-ec-semanal-deportes.Rproj`,
+   o bien ejecuta R desde la raíz del repositorio. Las rutas son relativas a
+   esa raíz, así que no hace falta RStudio.
+2. Ejecuta `code/deportes_analysis.R`. Este script llama, en orden, a
+   `code/deportes_download.R` (descomprime la base EUT 2012 desde
+   `data/Base EUT 2012.zip` en un directorio temporal) y a
+   `code/deportes_data_manipulation.R` (lee la EUT 2012 y las bases 2019 y
+   2020 de `data/` y crea objetos como `UT111_UT2012`).
+3. El análisis guarda los tres gráficos en `images/`. Para el texto,
    compila `report/texto-articulo-deporte.Rmd`.
 
-Se requiere conexión a internet, porque ninguna base se lee de `data/`.
+Solo se necesita conexión a internet para instalar paquetes o si falta algún
+archivo de `data/`.
 
 ## README anterior
 
